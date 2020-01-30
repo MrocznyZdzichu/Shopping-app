@@ -53,5 +53,16 @@ namespace WindowsFormsApp2
 
             command.Dispose();
         }
+
+        static public void delete(string sql)
+        {
+            SqlCommand command = new SqlCommand(sql, db_con);
+            SqlDataAdapter da = new SqlDataAdapter();
+
+            da.DeleteCommand = new SqlCommand(sql, db_con);
+            da.DeleteCommand.ExecuteNonQuery();
+
+            command.Dispose();
+        }
     }
 }
