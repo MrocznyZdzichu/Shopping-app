@@ -42,5 +42,16 @@ namespace WindowsFormsApp2
             SqlDataAdapter results = new SqlDataAdapter(sql, db_con);
             return results;
         }
+
+        static public void insert(string sql)
+        {
+            SqlCommand command = new SqlCommand(sql, db_con);
+            SqlDataAdapter da = new SqlDataAdapter();
+
+            da.InsertCommand = new SqlCommand(sql, db_con);
+            da.InsertCommand.ExecuteNonQuery();
+
+            command.Dispose();
+        }
     }
 }

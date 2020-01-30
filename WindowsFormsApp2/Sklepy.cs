@@ -43,5 +43,17 @@ namespace WindowsFormsApp2
         {
             this.refresh();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string shop_new = textBox1.Text;
+            string sql = $"insert into dimSklep values (\'{shop_new}\')";
+
+            DB_handling.open_connection();
+            DB_handling.insert(sql);
+            DB_handling.close_connection();
+
+            this.refresh();
+        }
     }
 }
