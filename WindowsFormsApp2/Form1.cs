@@ -22,5 +22,16 @@ namespace WindowsFormsApp2
             Sklepy sklepy_screen = new Sklepy();
             sklepy_screen.Show();
         }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Produkty prod_screen = new Produkty();
+            prod_screen.Show();
+        }
     }
 }
