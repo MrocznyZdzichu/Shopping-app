@@ -46,7 +46,6 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
-            this.debug = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -63,7 +62,6 @@
             this.tableLayoutPanel1.Controls.Add(this.button2, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.dataGridView1, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.debug, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -85,6 +83,7 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "Dodaj produkt";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -182,6 +181,7 @@
             this.button2.TabIndex = 2;
             this.button2.Text = "Usuń produkt";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // dataGridView1
             // 
@@ -286,14 +286,6 @@
             this.textBox4.TabIndex = 5;
             this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
-            // debug
-            // 
-            this.debug.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.debug.Location = new System.Drawing.Point(3, 3);
-            this.debug.Name = "debug";
-            this.debug.Size = new System.Drawing.Size(346, 20);
-            this.debug.TabIndex = 5;
-            // 
             // Produkty
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -305,7 +297,6 @@
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Text = "Produkty";
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -335,6 +326,5 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox debug;
     }
 }

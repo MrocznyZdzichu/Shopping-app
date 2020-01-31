@@ -156,5 +156,47 @@ namespace WindowsFormsApp2
             this.refresh_categories();
             this.refresh_subcats();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string new_name, new_category, new_subcat;
+            if (textBox1.Text != ""){
+                if (textBox2.Text != ""){
+                    if (textBox3.Text != ""){
+                        new_name = textBox1.Text;
+                        new_category = textBox2.Text;
+                        new_subcat = textBox3.Text;
+
+                        string sql_insert = $"insert into dimProdukt values " +
+                            $"(\'{new_name}\', \'{new_category}\', \'{new_subcat}\')";
+
+                        DB_handling.open_connection();
+                        DB_handling.insert(sql_insert);
+                        DB_handling.close_connection();
+
+                        this.refresh_table();
+                        this.refresh_categories();
+                        this.refresh_subcats();
+                    }
+                }
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string product_delete = dataGridView1.CurrentCell.Value.ToString();
+            int row = dataGridView1.CurrentCell.ColumnIndex;
+            string delete_PK = dataGridView1[0, row].Value.ToString();
+
+            string sql = $"delete from dimProdukt where Nazwa = \'{delete_PK}\'";
+
+            DB_handling.open_connection();
+            DB_handling.delete(sql);
+            DB_handling.close_connection();
+
+            this.refresh_table();
+            this.refresh_categories();
+            this.refresh_subcats();
+        }
     }
 }
