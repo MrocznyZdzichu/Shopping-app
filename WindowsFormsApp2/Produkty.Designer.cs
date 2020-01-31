@@ -76,10 +76,10 @@
             // 
             this.button1.BackColor = System.Drawing.SystemColors.ControlDark;
             this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(40, 393);
-            this.button1.Margin = new System.Windows.Forms.Padding(40, 25, 40, 25);
+            this.button1.Location = new System.Drawing.Point(5, 393);
+            this.button1.Margin = new System.Windows.Forms.Padding(5, 25, 5, 25);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(272, 43);
+            this.button1.Size = new System.Drawing.Size(342, 43);
             this.button1.TabIndex = 0;
             this.button1.Text = "Dodaj produkt";
             this.button1.UseVisualStyleBackColor = false;
@@ -173,10 +173,10 @@
             // 
             this.button2.BackColor = System.Drawing.SystemColors.ControlDark;
             this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button2.Location = new System.Drawing.Point(402, 393);
-            this.button2.Margin = new System.Windows.Forms.Padding(50, 25, 50, 25);
+            this.button2.Location = new System.Drawing.Point(392, 393);
+            this.button2.Margin = new System.Windows.Forms.Padding(40, 25, 40, 25);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(332, 43);
+            this.button2.Size = new System.Drawing.Size(352, 43);
             this.button2.TabIndex = 2;
             this.button2.Text = "Usuń produkt";
             this.button2.UseVisualStyleBackColor = false;
@@ -256,6 +256,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(176, 21);
             this.comboBox1.TabIndex = 3;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // comboBox2
             // 
