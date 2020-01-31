@@ -64,5 +64,16 @@ namespace WindowsFormsApp2
 
             command.Dispose();
         }
+
+        static public void update(string sql)
+        {
+            SqlCommand command = new SqlCommand(sql, db_con);
+            SqlDataAdapter da = new SqlDataAdapter();
+
+            da.UpdateCommand = new SqlCommand(sql, db_con);
+            da.UpdateCommand.ExecuteNonQuery();
+
+            command.Dispose();
+        }
     }
 }
