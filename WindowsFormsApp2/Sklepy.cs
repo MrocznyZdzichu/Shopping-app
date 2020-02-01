@@ -13,6 +13,8 @@ namespace WindowsFormsApp2
 {
     public partial class Sklepy : Form
     {
+        string cell_prev_text;
+
         void refresh()
         {
             string filter = textBox2.Text;
@@ -65,6 +67,24 @@ namespace WindowsFormsApp2
 
             DB_handling.open_connection();
             DB_handling.delete(sql);
+            DB_handling.close_connection();
+
+            this.refresh();
+        }
+
+        private void dataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            this.cell_prev_text = this.dataGridView1.CurrentCell.Value.ToString();
+        }
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            string prev_name    = this.cell_prev_text;
+            string new_name     = this.dataGridView1.CurrentCell.Value.ToString();
+            string sql_update   = $"update dimSklep set Nazwa = \'{new_name}\' where Nazwa = \'{prev_name}\'";
+
+            DB_handling.open_connection();
+            DB_handling.update(sql_update);
             DB_handling.close_connection();
 
             this.refresh();

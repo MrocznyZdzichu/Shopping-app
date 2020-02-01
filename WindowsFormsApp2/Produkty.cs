@@ -13,6 +13,8 @@ namespace WindowsFormsApp2
 {
     public partial class Produkty : Form
     {
+        string cell_prev_text;
+
         void refresh_table()
         {
             string sql = "select * from dimProdukt";
@@ -147,7 +149,12 @@ namespace WindowsFormsApp2
             updated_field.Add(1, "Kategoria");
             updated_field.Add(2, "Podkategoria");
 
-            string sql_update = $"update dimProdukt set {updated_field[col]} = \'{new_val}\' where Nazwa = \'{Nazwa_PK}\'";
+            string sql_update;
+            if (col != 0)
+                sql_update = $"update dimProdukt set {updated_field[col]} = \'{new_val}\' where Nazwa = \'{Nazwa_PK}\'";
+            else
+                sql_update = $"update dimProdukt set {updated_field[col]} = \'{new_val}\' where Nazwa = \'{cell_prev_text}\'";
+
             DB_handling.open_connection();
             DB_handling.update(sql_update);
             DB_handling.close_connection();
@@ -197,6 +204,11 @@ namespace WindowsFormsApp2
             this.refresh_table();
             this.refresh_categories();
             this.refresh_subcats();
+        }
+
+        private void dataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            this.cell_prev_text = this.dataGridView1.CurrentCell.Value.ToString();
         }
     }
 }
