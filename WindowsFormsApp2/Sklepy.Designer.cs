@@ -151,10 +151,11 @@
             this.dataGridView1.Location = new System.Drawing.Point(30, 93);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(30, 3, 30, 3);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridView1.Size = new System.Drawing.Size(249, 417);
             this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridView1_CellBeginEdit);
+            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             // 
             // zakupyDataSet
             // 
