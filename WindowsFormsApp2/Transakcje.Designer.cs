@@ -37,6 +37,10 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.comboBox5 = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
@@ -82,6 +86,10 @@
             this.tableLayoutPanel2.Controls.Add(this.comboBox2, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.comboBox3, 1, 2);
+            this.tableLayoutPanel2.Controls.Add(this.label4, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.comboBox4, 1, 3);
+            this.tableLayoutPanel2.Controls.Add(this.label5, 0, 4);
+            this.tableLayoutPanel2.Controls.Add(this.comboBox5, 1, 4);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(723, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -160,6 +168,50 @@
             this.comboBox3.TabIndex = 5;
             this.comboBox3.TextChanged += new System.EventHandler(this.comboBox3_TextChanged);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Right;
+            this.label4.Location = new System.Drawing.Point(258, 78);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(43, 26);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Miesiąc";
+            // 
+            // comboBox4
+            // 
+            this.comboBox4.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.comboBox4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Location = new System.Drawing.Point(307, 81);
+            this.comboBox4.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(291, 21);
+            this.comboBox4.TabIndex = 7;
+            this.comboBox4.TextChanged += new System.EventHandler(this.comboBox4_TextChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Dock = System.Windows.Forms.DockStyle.Right;
+            this.label5.Location = new System.Drawing.Point(267, 104);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(34, 30);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Dzień";
+            // 
+            // comboBox5
+            // 
+            this.comboBox5.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.comboBox5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comboBox5.FormattingEnabled = true;
+            this.comboBox5.Location = new System.Drawing.Point(307, 107);
+            this.comboBox5.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
+            this.comboBox5.Name = "comboBox5";
+            this.comboBox5.Size = new System.Drawing.Size(291, 21);
+            this.comboBox5.TabIndex = 9;
+            this.comboBox5.TextChanged += new System.EventHandler(this.comboBox5_TextChanged);
+            // 
             // Transakcje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -188,5 +240,9 @@
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox comboBox5;
     }
 }
