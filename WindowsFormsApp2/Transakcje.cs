@@ -19,6 +19,7 @@ namespace WindowsFormsApp2
             this.refresh_summary();
             this.refresh_shops();
             this.refresh_products();
+            this.refresh_years();
         }
 
         void refresh_shops()
@@ -52,6 +53,24 @@ namespace WindowsFormsApp2
             this.comboBox2.DisplayMember = "Nazwa";
             this.comboBox2.SelectedIndex = -1;
         }
+        void refresh_years()
+        {
+            string sql = "select Rok from dimData dat " +
+                "left join factZakup zak on zak.Data = dat.Klucz " +
+                "group by Rok having count(Numer) > 0 " +
+                "order by Rok desc";
+
+            DB_handling.open_connection();
+            SqlDataAdapter years = DB_handling.select_query(sql);
+            DB_handling.close_connection();
+
+            DataTable dt = new DataTable();
+            years.Fill(dt);
+
+            this.comboBox3.DataSource = dt;
+            this.comboBox3.DisplayMember = "Rok";
+            this.comboBox3.SelectedIndex = -1;
+        }
         void refresh_summary()
         {
             string shop_filter = this.comboBox1.Text;
@@ -62,10 +81,15 @@ namespace WindowsFormsApp2
             string sql_prod = $"Produkt like \'{product_filter}%\' ";
             bool is_prod_filt = (product_filter == "") ? false : true;
 
-            bool[] filter_flags = {is_shop_filt, is_prod_filt};
+            string year_filter = this.comboBox3.Text;
+            string sql_year = $"Rok like \'{year_filter}%\' ";
+            bool is_year_filt = (year_filter == "") ? false : true;
+
+            bool[] filter_flags = {is_shop_filt, is_prod_filt, is_year_filt };
             Dictionary<int, string> filtering_insertions = new Dictionary<int, string>();
             filtering_insertions.Add(0, sql_shop);
             filtering_insertions.Add(1, sql_prod);
+            filtering_insertions.Add(2, sql_year);
 
             string sql = "";
             string sql_where = "where ";
@@ -108,6 +132,11 @@ namespace WindowsFormsApp2
         }
 
         private void comboBox2_TextChanged(object sender, EventArgs e)
+        {
+            this.refresh_summary();
+        }
+
+        private void comboBox3_TextChanged(object sender, EventArgs e)
         {
             this.refresh_summary();
         }
