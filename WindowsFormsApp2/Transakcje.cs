@@ -55,41 +55,43 @@ namespace WindowsFormsApp2
         void refresh_summary()
         {
             string shop_filter = this.comboBox1.Text;
-            int is_shop_filt = (shop_filter == "") ? 0 : 1;
+            string sql_shop = $"Sklep like \'{shop_filter}%\' ";
+            bool is_shop_filt = (shop_filter == "") ? false : true;
 
             string product_filter = this.comboBox2.Text;
-            int  is_prod_filt = (product_filter == "") ? 0: 2;
+            string sql_prod = $"Produkt like \'{product_filter}%\' ";
+            bool is_prod_filt = (product_filter == "") ? false : true;
 
-            int query_flag = is_prod_filt + is_shop_filt;
+            bool[] filter_flags = {is_shop_filt, is_prod_filt};
+            Dictionary<int, string> filtering_insertions = new Dictionary<int, string>();
+            filtering_insertions.Add(0, sql_shop);
+            filtering_insertions.Add(1, sql_prod);
+
             string sql = "";
-            switch (query_flag)
+            string sql_where = "where ";
+            string sql_and = "and ";
+            string sql_beg = "select Numer, Produkt, Sklep, Data, KtoKomu, Kwota " +
+                          "from factZakup zak left join dimData dat on zak.Data = dat.Klucz "; 
+            string sql_end = "order by dat.Rok desc, dat.Miesiąc desc, dat.Dzień desc";
+
+            if (!filter_flags.Contains(true))
+                sql = sql_beg + sql_end;
+            else
             {
-                case 0:
-                    sql = "select Numer, Produkt, Sklep, Data, KtoKomu, Kwota " +
-                          "from factZakup zak left join dimData dat on zak.Data = dat.Klucz " +
-                          "order by dat.Rok desc, dat.Miesiąc desc, dat.Dzień desc";
-                    break;
+                sql = sql_beg + sql_where;
+                bool first_added = false;
+                for (int i = 0; i < filter_flags.Length; i++)
+                {
 
-                case 1:
-                    sql = "select Numer, Produkt, Sklep, Data, KtoKomu, Kwota " +
-                          "from factZakup zak left join dimData dat on zak.Data = dat.Klucz " +
-                          $"where Sklep like \'{shop_filter}%\'" +
-                          "order by dat.Rok desc, dat.Miesiąc desc, dat.Dzień desc";
-                    break;
-
-                case 2:
-                    sql = "select Numer, Produkt, Sklep, Data, KtoKomu, Kwota " +
-                          "from factZakup zak left join dimData dat on zak.Data = dat.Klucz " +
-                          $"where Produkt like \'{product_filter}%\'" +
-                          "order by dat.Rok desc, dat.Miesiąc desc, dat.Dzień desc";
-                    break;
-
-                case 3:
-                    sql = "select Numer, Produkt, Sklep, Data, KtoKomu, Kwota " +
-                          "from factZakup zak left join dimData dat on zak.Data = dat.Klucz " +
-                          $"where Sklep like \'{shop_filter}%\' and Produkt like \'{product_filter}%\'" +
-                          "order by dat.Rok desc, dat.Miesiąc desc, dat.Dzień desc";
-                    break;
+                    if (filter_flags[i] == true)
+                    {
+                        if (first_added == true)
+                            sql += sql_and;
+                        sql += filtering_insertions[i];
+                        first_added = true;
+                    }
+                }
+                sql += sql_end;
             }
             DB_handling.open_connection();
             SqlDataAdapter zakupy = DB_handling.select_query(sql);
