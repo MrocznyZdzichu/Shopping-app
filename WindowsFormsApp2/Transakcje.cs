@@ -254,5 +254,16 @@ namespace WindowsFormsApp2
             insert_obs = (row == row_count - 1) ? insert_obs : insert_obs += ",";
             return insert_obs;
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Sklepy shops_scren = new Sklepy();
+            shops_scren.Show();
+        }
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Produkty prod_screen = new Produkty();
+            prod_screen.Show();
+        }
     }
 }
