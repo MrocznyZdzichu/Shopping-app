@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp2
 {
-    public partial class Zakupy : Form
+    public partial class Form1 : Form
     {
-        public Zakupy()
+        public Form1()
         {
             InitializeComponent();
         }
@@ -36,8 +36,7 @@ namespace WindowsFormsApp2
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Transakcje trans_sceen = new Transakcje();
-            trans_sceen.Show();
+
         }
     }
 }
