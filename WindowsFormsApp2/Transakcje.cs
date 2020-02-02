@@ -230,6 +230,18 @@ namespace WindowsFormsApp2
 
             this.refresh_summary();
         }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            int row = this.dataGridView1.CurrentCell.RowIndex;
+            string deleted_PK = this.dataGridView1[0, row].Value.ToString();
+            string sql_delete = $"delete from factZakup where Numer = {deleted_PK}";
+
+            DB_handling.open_connection();
+            DB_handling.delete(sql_delete);
+            DB_handling.close_connection();
+
+            this.refresh_summary();
+        }
 
         private string read_row(int row, int row_count)
         {

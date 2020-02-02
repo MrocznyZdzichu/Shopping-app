@@ -49,6 +49,7 @@
             this.KtoKomu = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Kwota = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.button2 = new System.Windows.Forms.Button();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -226,6 +227,7 @@
             this.tableLayoutPanel1.Controls.Add(this.button1, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.dataGridView2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.button2, 1, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -291,6 +293,19 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(661, 134);
             this.tableLayoutPanel3.TabIndex = 4;
             // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button2.Location = new System.Drawing.Point(817, 470);
+            this.button2.Margin = new System.Windows.Forms.Padding(150, 50, 150, 50);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(367, 41);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "Usun transakcję";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // Transakcje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -332,5 +347,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn KtoKomu;
         private System.Windows.Forms.DataGridViewTextBoxColumn Kwota;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.Button button2;
     }
 }
