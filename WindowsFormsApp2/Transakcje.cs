@@ -210,5 +210,37 @@ namespace WindowsFormsApp2
         {
             this.refresh_summary();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string sql_insert = "insert into factZakup values ";
+            int row_count = 0;
+            for (int i = 0; i < this.dataGridView2.Rows.Count - 1; i++)
+            {
+                if (this.dataGridView2[0, i].Value.ToString() != "")
+                    row_count++;
+            }
+
+            for (int i = 0; i < row_count; i++)
+                sql_insert += this.read_row(i, row_count);
+
+            DB_handling.open_connection();
+            DB_handling.insert(sql_insert);
+            DB_handling.close_connection();
+
+            this.refresh_summary();
+        }
+
+        private string read_row(int row, int row_count)
+        {
+            string insert_obs = $"(\'{this.dataGridView2[0, row].Value.ToString()}\', " +
+                                $"\'{this.dataGridView2[1, row].Value.ToString()}\', " +
+                                $"\'{this.dataGridView2[2, row].Value.ToString()}\', " +
+                                $"\'{this.dataGridView2[3, row].Value.ToString()}\', " +
+                                $"{this.dataGridView2[4, row].Value.ToString()})";
+
+            insert_obs = (row == row_count - 1) ? insert_obs : insert_obs += ",";
+            return insert_obs;
+        }
     }
 }
