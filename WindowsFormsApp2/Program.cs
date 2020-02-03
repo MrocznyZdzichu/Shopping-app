@@ -43,6 +43,20 @@ namespace WindowsFormsApp2
             return results;
         }
 
+        static public SqlDataAdapter get_years()
+        {
+            SqlDataAdapter years;
+
+            string sql = "select ROK " +
+                         "from factZakup zak left join dimData dat on zak.DATA = dat.KLUCZ " +
+                         "group by ROK";
+
+            open_connection();
+            years = select_query(sql);
+            close_connection();
+
+            return years;
+        }
         static public void insert(string sql)
         {
             SqlCommand command = new SqlCommand(sql, db_con);

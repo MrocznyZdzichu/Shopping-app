@@ -56,15 +56,7 @@ namespace WindowsFormsApp2
         }
         void refresh_years()
         {
-            string sql = "select Rok from dimData dat " +
-                "left join factZakup zak on zak.Data = dat.Klucz " +
-                "group by Rok having count(Numer) > 0 " +
-                "order by Rok desc";
-
-            DB_handling.open_connection();
-            SqlDataAdapter years = DB_handling.select_query(sql);
-            DB_handling.close_connection();
-
+            SqlDataAdapter years = DB_handling.get_years();
             DataTable dt = new DataTable();
             years.Fill(dt);
 

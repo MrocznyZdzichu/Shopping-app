@@ -13,9 +13,12 @@ namespace WindowsFormsApp2
 {
     public partial class Raporty : Form
     {
+        int report_mode;
         public Raporty()
         {
             InitializeComponent();
+            report_mode = 0;
+            this.label1.Text = "";
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
@@ -25,19 +28,58 @@ namespace WindowsFormsApp2
 
         private void button1_Click(object sender, EventArgs e)
         {
+            report_mode = 1;
+
+            this.comboBox1.Visible = true;
+            this.label1.Text = "Rok";
+
+            SqlDataAdapter years = DB_handling.get_years();
+            DataTable dt0 = new DataTable();
+            years.Fill(dt0);
+
+            this.comboBox1.DataSource = dt0;
+            this.comboBox1.DisplayMember = "Rok";
+            this.comboBox1.SelectedIndex = -1;
+
+            this.refresh_report1();
+        }
+        private void refresh_report1()
+        {
             string sql_beg = "select ROK, MIESIĄC, sum(KWOTA) as RACHUNEK, sum([DO ODDANIA]) as ZWROT " +
-                             "from factZakup zak left join dimData dat on zak.DATA = dat.KLUCZ " +
-                             "group by ROK, MIESIĄC order by ROK desc, MIESIĄC desc";
+                             "from factZakup zak left join dimData dat on zak.DATA = dat.KLUCZ ";
+            string sql_and = "and ";
+            string sql_where = "where ";
+            string sql_end = "group by ROK, MIESIĄC order by ROK desc, MIESIĄC desc";
+            Dictionary<int, string> filter_config = new Dictionary<int, string>();
+            
+
+            string year_filter = this.comboBox1.Text;
+            bool is_year_filter = year_filter != "";
+            string year_sql = $"ROK like {year_filter}";
+            filter_config.Add(0, year_sql);
+
+            bool[] filters_list = { is_year_filter };
+            string sql = sql_beg;
+            bool first_filter_added = false;
+
+            for (int i = 0; i < filters_list.Length; i++)
+            {
+                if (filters_list[i] == true)
+                {
+                    sql = (first_filter_added == false) ? sql + sql_where : sql + sql_and;
+                    sql += filter_config[i];
+                }
+            }
+            sql += sql_end;
 
             DB_handling.open_connection();
-            SqlDataAdapter da = DB_handling.select_query(sql_beg);
+            SqlDataAdapter da = DB_handling.select_query(sql);
             DB_handling.close_connection();
 
             DataTable dt = new DataTable();
             da.Fill(dt);
             this.dataGridView1.DataSource = dt;
         }
-
         private void button2_Click(object sender, EventArgs e)
         {
             string sql_beg = "select DATA, SKLEP, RACHUNEK from ( " +
@@ -53,6 +95,12 @@ namespace WindowsFormsApp2
             DataTable dt = new DataTable();
             da.Fill(dt);
             this.dataGridView1.DataSource = dt;
+        }
+
+        private void comboBox1_TextChanged(object sender, EventArgs e)
+        {
+            if (report_mode == 1)
+                this.refresh_report1();
         }
     }
 }
