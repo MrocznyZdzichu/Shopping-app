@@ -57,6 +57,25 @@ namespace WindowsFormsApp2
 
             return years;
         }
+        static public SqlDataAdapter get_months(string year)
+        {
+            SqlDataAdapter months;
+
+            string sql_beg = $"select [Nazwa miesiąca] " +
+                         $"from factZakup zak left join dimData dat " +
+                         $"on zak.DATA = dat.KLUCZ ";
+            string sql_where = (year == "") ? "" : $"where ROK = {year} ";
+            string sql_end = "group by [Nazwa miesiąca], Miesiąc " +
+                             "order by Miesiąc";
+            string sql = sql_beg + sql_where + sql_end;
+
+            open_connection();
+            months = select_query(sql);
+            close_connection();
+
+            return months;
+        }
+
         static public void insert(string sql)
         {
             SqlCommand command = new SqlCommand(sql, db_con);
@@ -67,7 +86,6 @@ namespace WindowsFormsApp2
 
             command.Dispose();
         }
-
         static public void delete(string sql)
         {
             SqlCommand command = new SqlCommand(sql, db_con);
@@ -78,7 +96,6 @@ namespace WindowsFormsApp2
 
             command.Dispose();
         }
-
         static public void update(string sql)
         {
             SqlCommand command = new SqlCommand(sql, db_con);

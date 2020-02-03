@@ -19,6 +19,9 @@ namespace WindowsFormsApp2
             InitializeComponent();
             report_mode = 0;
             this.label1.Text = "";
+            this.comboBox1.Visible = false;
+            this.label2.Text = "";
+            this.comboBox2.Visible = false;
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
@@ -33,6 +36,16 @@ namespace WindowsFormsApp2
             this.comboBox1.Visible = true;
             this.label1.Text = "Rok";
 
+            this.comboBox2.Visible = true;
+            this.label2.Text = "Miesiąc";
+
+            this.refresh_years();
+            this.refresh_months();
+            this.refresh_report1();
+        }
+
+        private void refresh_years()
+        {
             SqlDataAdapter years = DB_handling.get_years();
             DataTable dt0 = new DataTable();
             years.Fill(dt0);
@@ -40,8 +53,17 @@ namespace WindowsFormsApp2
             this.comboBox1.DataSource = dt0;
             this.comboBox1.DisplayMember = "Rok";
             this.comboBox1.SelectedIndex = -1;
+        }
+        private void refresh_months()
+        {
+            string year = this.comboBox1.Text;
+            SqlDataAdapter months = DB_handling.get_months(year);
+            DataTable dt1 = new DataTable();
+            months.Fill(dt1);
 
-            this.refresh_report1();
+            this.comboBox2.DataSource = dt1;
+            this.comboBox2.DisplayMember = "Nazwa miesiąca";
+            this.comboBox2.SelectedIndex = -1;
         }
         private void refresh_report1()
         {
@@ -55,10 +77,15 @@ namespace WindowsFormsApp2
 
             string year_filter = this.comboBox1.Text;
             bool is_year_filter = year_filter != "";
-            string year_sql = $"ROK like {year_filter}";
+            string year_sql = $"ROK like {year_filter} ";
             filter_config.Add(0, year_sql);
 
-            bool[] filters_list = { is_year_filter };
+            string month_filter = this.comboBox2.Text;
+            bool is_month_filter = year_filter != "";
+            string month_sql = $"[Nazwa miesiąca] like \'{month_filter}%\' ";
+            filter_config.Add(1, month_sql);
+
+            bool[] filters_list = { is_year_filter, is_month_filter};
             string sql = sql_beg;
             bool first_filter_added = false;
 
@@ -68,10 +95,11 @@ namespace WindowsFormsApp2
                 {
                     sql = (first_filter_added == false) ? sql + sql_where : sql + sql_and;
                     sql += filter_config[i];
+                    first_filter_added = true;
                 }
             }
             sql += sql_end;
-
+            this.textBox1.Text = sql;
             DB_handling.open_connection();
             SqlDataAdapter da = DB_handling.select_query(sql);
             DB_handling.close_connection();
@@ -100,7 +128,17 @@ namespace WindowsFormsApp2
         private void comboBox1_TextChanged(object sender, EventArgs e)
         {
             if (report_mode == 1)
+            {
                 this.refresh_report1();
+                this.refresh_months();
+            }
+        }
+        private void comboBox2_TextChanged(object sender, EventArgs e)
+        {
+            if (report_mode == 1)
+            {
+                this.refresh_report1();
+            }
         }
     }
 }
