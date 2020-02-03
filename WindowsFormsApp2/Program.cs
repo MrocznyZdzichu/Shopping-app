@@ -75,6 +75,26 @@ namespace WindowsFormsApp2
 
             return months;
         }
+        static public SqlDataAdapter get_days(string year, string month)
+        { 
+            string sql = "";
+            if (year != "" && month != "")
+            {
+                sql = "select Dzień from dimData " +
+                      $"where Rok = {year} and [Nazwa miesiąca] = \'{month}\' " +
+                      "group by Dzień order by Dzień";
+            }
+            else
+            {
+                sql = "select Dzień from dimData " +
+                      "group by Dzień order by Dzień";
+            }
+
+            open_connection();
+            SqlDataAdapter days = select_query(sql);
+            close_connection();
+            return days;
+        }
 
         static public void insert(string sql)
         {

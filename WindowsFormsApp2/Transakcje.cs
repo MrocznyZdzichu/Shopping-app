@@ -145,22 +145,7 @@ namespace WindowsFormsApp2
             string year = comboBox3.Text;
             string month = comboBox4.Text;
 
-            string sql = "";
-            if (year != "" && month != "")
-            {  
-                sql = "select Dzień from dimData " +
-                      $"where Rok = {year} and [Nazwa miesiąca] = \'{month}\' " +
-                      "group by Dzień order by Dzień";
-            }
-            else {
-                sql = "select Dzień from dimData " +
-                      "group by Dzień order by Dzień";
-            }
-
-            DB_handling.open_connection();
-            SqlDataAdapter days = DB_handling.select_query(sql);
-            DB_handling.close_connection();
-
+            SqlDataAdapter days = DB_handling.get_days(year, month);
             DataTable dt = new DataTable();
             days.Fill(dt);
 
