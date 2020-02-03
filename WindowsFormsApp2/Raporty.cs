@@ -65,6 +65,7 @@ namespace WindowsFormsApp2
             refresh_years();
             refresh_months();
             refresh_days();
+            refresh_shops();
         }
 
         private void refresh_years()
@@ -102,7 +103,21 @@ namespace WindowsFormsApp2
             this.comboBox3.DisplayMember = "Dzień";
             this.comboBox3.SelectedIndex = -1;
         }
+        private void refresh_shops()
+        {
+            string sql = "select Nazwa from dimSklep group by Nazwa";
 
+            DB_handling.open_connection();
+            SqlDataAdapter shops = DB_handling.select_query(sql);
+            DB_handling.close_connection();
+
+            DataTable dt = new DataTable();
+            shops.Fill(dt);
+
+            this.comboBox4.DataSource = dt;
+            this.comboBox4.DisplayMember = "Nazwa";
+            this.comboBox4.SelectedIndex = -1;
+        }
         private void refresh_report1()
         {
             string sql_beg = "select ROK, MIESIĄC, sum(KWOTA) as RACHUNEK, sum([DO ODDANIA]) as ZWROT " +
@@ -173,7 +188,12 @@ namespace WindowsFormsApp2
             string day_sql = $"Dzień like {day_filter} ";
             filter_config.Add(2, day_sql);
 
-            bool[] filters_list = { is_year_filter, is_month_filter, is_day_filter };
+            string shop_filter = this.comboBox4.Text;
+            bool is_shop_filter = shop_filter != "";
+            string shop_sql = $"SKLEP like \'{shop_filter}%\' ";
+            filter_config.Add(3, shop_sql);
+
+            bool[] filters_list = { is_year_filter, is_month_filter, is_day_filter, is_shop_filter };
             string sql = sql_beg;
             bool first_filter_added = false;
 
@@ -223,6 +243,13 @@ namespace WindowsFormsApp2
             }
         }
         private void comboBox3_TextChanged(object sender, EventArgs e)
+        {
+            if (report_mode == 2)
+            {
+                this.refresh_report2();
+            }
+        }
+        private void comboBox4_TextChanged(object sender, EventArgs e)
         {
             if (report_mode == 2)
             {

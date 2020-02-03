@@ -243,6 +243,7 @@
             this.comboBox4.Name = "comboBox4";
             this.comboBox4.Size = new System.Drawing.Size(175, 21);
             this.comboBox4.TabIndex = 7;
+            this.comboBox4.TextChanged += new System.EventHandler(this.comboBox4_TextChanged);
             // 
             // Raporty
             // 
