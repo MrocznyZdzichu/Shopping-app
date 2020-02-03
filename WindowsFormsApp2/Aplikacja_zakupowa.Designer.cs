@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApp2
 {
-    partial class Zakupy
+    partial class Form1
     {
         /// <summary>
         /// Wymagana zmienna projektanta.
@@ -70,7 +70,6 @@
             this.button4.TabIndex = 3;
             this.button4.Text = "Raporty";
             this.button4.UseVisualStyleBackColor = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button3
             // 
@@ -111,14 +110,14 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // Zakupy
+            // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.ClientSize = new System.Drawing.Size(384, 361);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "Zakupy";
+            this.Name = "Form1";
             this.Text = "Aplikacja_zakupowa";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
