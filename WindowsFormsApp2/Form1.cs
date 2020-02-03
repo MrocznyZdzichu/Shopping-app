@@ -39,5 +39,11 @@ namespace WindowsFormsApp2
             Transakcje trans_sceen = new Transakcje();
             trans_sceen.Show();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Raporty screen = new Raporty();
+            screen.Show();
+        }
     }
 }

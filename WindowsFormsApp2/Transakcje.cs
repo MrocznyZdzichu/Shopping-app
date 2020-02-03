@@ -56,15 +56,7 @@ namespace WindowsFormsApp2
         }
         void refresh_years()
         {
-            string sql = "select Rok from dimData dat " +
-                "left join factZakup zak on zak.Data = dat.Klucz " +
-                "group by Rok having count(Numer) > 0 " +
-                "order by Rok desc";
-
-            DB_handling.open_connection();
-            SqlDataAdapter years = DB_handling.select_query(sql);
-            DB_handling.close_connection();
-
+            SqlDataAdapter years = DB_handling.get_years();
             DataTable dt = new DataTable();
             years.Fill(dt);
 
@@ -139,17 +131,7 @@ namespace WindowsFormsApp2
         void refresh_months()
         {
             string year = comboBox3.Text;
-            string sql_beg = "select [Nazwa miesiąca] from dimData dat " +
-                         "left join factZakup zak on dat.Klucz = zak.Data ";
-            string sql_where = (year == "") ? "" : $"where Rok = {year} ";
-            string sql_end = "group by [Nazwa miesiąca], Miesiąc having count(Numer) > 0" +
-                             "order by Miesiąc";
-
-            string sql = sql_beg + sql_where + sql_end;
-
-            DB_handling.open_connection();
-            SqlDataAdapter months = DB_handling.select_query(sql);
-            DB_handling.close_connection();
+            SqlDataAdapter months = DB_handling.get_months(year);
 
             DataTable dt = new DataTable();
             months.Fill(dt);
