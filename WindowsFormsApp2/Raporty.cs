@@ -99,7 +99,7 @@ namespace WindowsFormsApp2
                 }
             }
             sql += sql_end;
-            this.textBox1.Text = sql;
+          
             DB_handling.open_connection();
             SqlDataAdapter da = DB_handling.select_query(sql);
             DB_handling.close_connection();
