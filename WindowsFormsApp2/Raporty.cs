@@ -22,6 +22,10 @@ namespace WindowsFormsApp2
             this.comboBox1.Visible = false;
             this.label2.Text = "";
             this.comboBox2.Visible = false;
+            this.label3.Text = "";
+            this.comboBox3.Visible = false;
+            this.label4.Text = "";
+            this.comboBox4.Visible = false;
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
@@ -42,6 +46,25 @@ namespace WindowsFormsApp2
             this.refresh_years();
             this.refresh_months();
             this.refresh_report1();
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            report_mode = 2;
+
+            this.label1.Text = "Rok";
+            this.label2.Text = "Miesiąc";
+            this.label3.Text = "Dzień";
+            this.label4.Text = "Sklep";
+
+            this.comboBox1.Visible = true;
+            this.comboBox2.Visible = true;
+            this.comboBox3.Visible = true;
+            this.comboBox4.Visible = true;
+
+            refresh_report2();
+            refresh_years();
+            refresh_months();
+            refresh_days();
         }
 
         private void refresh_years()
@@ -65,11 +88,27 @@ namespace WindowsFormsApp2
             this.comboBox2.DisplayMember = "Nazwa miesiąca";
             this.comboBox2.SelectedIndex = -1;
         }
+        private void refresh_days()
+        {
+            string year = this.comboBox1.Text;
+            string month = this.comboBox2.Text;
+
+            SqlDataAdapter days = DB_handling.get_days(year, month);
+            DataTable dt = new DataTable()
+;
+            days.Fill(dt);
+
+            this.comboBox3.DataSource = dt;
+            this.comboBox3.DisplayMember = "Dzień";
+            this.comboBox3.SelectedIndex = -1;
+        }
+
         private void refresh_report1()
         {
             string sql_beg = "select ROK, MIESIĄC, sum(KWOTA) as RACHUNEK, sum([DO ODDANIA]) as ZWROT " +
                              "from factZakup zak left join dimData dat on zak.DATA = dat.KLUCZ ";
             string sql_and = "and ";
+
             string sql_where = "where ";
             string sql_end = "group by ROK, MIESIĄC order by ROK desc, MIESIĄC desc";
             Dictionary<int, string> filter_config = new Dictionary<int, string>();
@@ -81,11 +120,11 @@ namespace WindowsFormsApp2
             filter_config.Add(0, year_sql);
 
             string month_filter = this.comboBox2.Text;
-            bool is_month_filter = year_filter != "";
-            string month_sql = $"[Nazwa miesiąca] like \'{month_filter}%\' ";
+            bool is_month_filter = month_filter != "";
+            string month_sql = $"[Nazwa miesiąca] like \'{month_filter}\' ";
             filter_config.Add(1, month_sql);
 
-            bool[] filters_list = { is_year_filter, is_month_filter};
+            bool[] filters_list = {is_year_filter, is_month_filter};
             string sql = sql_beg;
             bool first_filter_added = false;
 
@@ -108,16 +147,49 @@ namespace WindowsFormsApp2
             da.Fill(dt);
             this.dataGridView1.DataSource = dt;
         }
-        private void button2_Click(object sender, EventArgs e)
+        private void refresh_report2()
         {
             string sql_beg = "select DATA, SKLEP, RACHUNEK from ( " +
-                                "select DATA, SKLEP, sum(KWOTA) as RACHUNEK " +
-                                "from factZakup group by DATA, SKLEP) t1 " +
-                             "left join dimData dat on t1.DATA = dat.KLUCZ " +
-                             "order by ROK desc, MIESIĄC desc, DZIEŃ desc";
+                    "select DATA, SKLEP, sum(KWOTA) as RACHUNEK " +
+                    "from factZakup group by DATA, SKLEP) t1 " +
+                 "left join dimData dat on t1.DATA = dat.KLUCZ ";
+            string sql_where = "where ";
+            string sql_and = "and ";
+            string sql_end = "order by ROK desc, MIESIĄC desc, DZIEŃ desc";
+            Dictionary<int, string> filter_config = new Dictionary<int, string>();
+
+            string year_filter = this.comboBox1.Text;
+            bool is_year_filter = year_filter != "";
+            string year_sql = $"ROK like {year_filter} ";
+            filter_config.Add(0, year_sql);
+
+            string month_filter = this.comboBox2.Text;
+            bool is_month_filter = month_filter != "";
+            string month_sql = $"[Nazwa miesiąca] like \'{month_filter}%\' ";
+            filter_config.Add(1, month_sql);
+
+            string day_filter = this.comboBox3.Text;
+            bool is_day_filter = day_filter != "";
+            string day_sql = $"Dzień like {day_filter} ";
+            filter_config.Add(2, day_sql);
+
+            bool[] filters_list = { is_year_filter, is_month_filter, is_day_filter };
+            string sql = sql_beg;
+            bool first_filter_added = false;
+
+            for (int i = 0; i < filters_list.Length; i++)
+            {
+                if (filters_list[i] == true)
+                {
+                    sql = (first_filter_added == false) ? sql + sql_where : sql + sql_and;
+                    sql += filter_config[i];
+                    first_filter_added = true;
+                }
+            }
+            sql += sql_end;
 
             DB_handling.open_connection();
-            SqlDataAdapter da = DB_handling.select_query(sql_beg);
+            SqlDataAdapter da = DB_handling.select_query(sql);
             DB_handling.close_connection();
 
             DataTable dt = new DataTable();
@@ -130,14 +202,31 @@ namespace WindowsFormsApp2
             if (report_mode == 1)
             {
                 this.refresh_report1();
-                this.refresh_months();
             }
+            if (report_mode == 2)
+            {
+                this.refresh_report2();
+                this.refresh_days();
+            }
+            this.refresh_months();
         }
         private void comboBox2_TextChanged(object sender, EventArgs e)
         {
             if (report_mode == 1)
             {
                 this.refresh_report1();
+            }
+            if (report_mode == 2)
+            {
+                this.refresh_report2();
+                this.refresh_days();
+            }
+        }
+        private void comboBox3_TextChanged(object sender, EventArgs e)
+        {
+            if (report_mode == 2)
+            {
+                this.refresh_report2();
             }
         }
     }
