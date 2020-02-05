@@ -24,6 +24,8 @@ namespace WindowsFormsApp2
             this.refresh_days();
         }
 
+        string prev_text;
+
         void refresh_shops()
         {
             string sql = "select Nazwa from dimSklep group by Nazwa";
@@ -240,6 +242,40 @@ namespace WindowsFormsApp2
             {
                 this.dataGridView2.SelectedCells[i].Value = insertion;
             }
+        }
+
+        private void dataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            this.prev_text = this.dataGridView1.CurrentCell.Value.ToString();
+        }
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            int row = this.dataGridView1.CurrentCell.RowIndex;
+            int col = this.dataGridView1.CurrentCell.ColumnIndex;
+            string new_val = this.dataGridView1.CurrentCell.Value.ToString();
+
+            string[] col_names = { "Numer", "Produkt", "Sklep", "Data", "KtoKomu", "Kwota" };
+
+            string sql_beg = $"update factZakup set {col_names[col]} = ";
+            string sql_end = "";
+            if (col == 0)
+            {
+                sql_end = $"{new_val} where Numer = {this.prev_text}";
+            }
+            else
+            {
+                sql_end = $"\'{new_val}\' where Numer = {this.dataGridView1[0, row].Value.ToString()}";
+            }
+
+            string sql = sql_beg + sql_end;
+            System.IO.File.WriteAllText(@"E:\c#_tutorial\WindowsFormsApp2\debug.log", sql);
+
+            DB_handling.open_connection();
+            DB_handling.update(sql);
+            DB_handling.close_connection();
+
+            this.refresh_summary();
         }
     }
 }
