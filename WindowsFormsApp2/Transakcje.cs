@@ -232,5 +232,14 @@ namespace WindowsFormsApp2
             Produkty prod_screen = new Produkty();
             prod_screen.Show();
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string insertion = this.textBox1.Text;
+            for (int i = 0; i < this.dataGridView2.SelectedCells.Count; i++)
+            {
+                this.dataGridView2.SelectedCells[i].Value = insertion;
+            }
+        }
     }
 }
