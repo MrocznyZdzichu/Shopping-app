@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Custom_SQL.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Custom_SQL.Designer.cs">
+      <DependentUpon>Custom_SQL.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +92,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>zakupyDataSet.xsd</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Custom_SQL.resx">
+      <DependentUpon>Custom_SQL.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

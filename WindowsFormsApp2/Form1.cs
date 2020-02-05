@@ -45,5 +45,11 @@ namespace WindowsFormsApp2
             Raporty screen = new Raporty();
             screen.Show();
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Custom_SQL screen = new Custom_SQL();
+            screen.Show();
+        }
     }
 }
