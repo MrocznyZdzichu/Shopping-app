@@ -46,6 +46,8 @@ namespace WindowsFormsApp2
             this.refresh_years();
             this.refresh_months();
             this.refresh_report1();
+
+            this.comboBox4.Visible = false;
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -74,9 +76,13 @@ namespace WindowsFormsApp2
             DataTable dt0 = new DataTable();
             years.Fill(dt0);
 
+            string prev = comboBox1.Text;
             this.comboBox1.DataSource = dt0;
             this.comboBox1.DisplayMember = "Rok";
-            this.comboBox1.SelectedIndex = -1;
+            if (prev == "")
+                this.comboBox1.SelectedIndex = -1;
+            else
+                comboBox1.Text = prev;
         }
         private void refresh_months()
         {
@@ -85,9 +91,13 @@ namespace WindowsFormsApp2
             DataTable dt1 = new DataTable();
             months.Fill(dt1);
 
+            string prev = comboBox2.Text;
             this.comboBox2.DataSource = dt1;
             this.comboBox2.DisplayMember = "Nazwa miesiąca";
-            this.comboBox2.SelectedIndex = -1;
+            if (prev == "")
+                this.comboBox2.SelectedIndex = -1;
+            else
+                comboBox2.Text = prev;
         }
         private void refresh_days()
         {
@@ -99,9 +109,13 @@ namespace WindowsFormsApp2
 ;
             days.Fill(dt);
 
+            string prev = comboBox3.Text;
             this.comboBox3.DataSource = dt;
             this.comboBox3.DisplayMember = "Dzień";
-            this.comboBox3.SelectedIndex = -1;
+            if (prev == "")
+                this.comboBox3.SelectedIndex = -1;
+            else
+                comboBox3.Text = prev;
         }
         private void refresh_shops()
         {
@@ -114,9 +128,13 @@ namespace WindowsFormsApp2
             DataTable dt = new DataTable();
             shops.Fill(dt);
 
+            string prev = comboBox4.Text;
             this.comboBox4.DataSource = dt;
             this.comboBox4.DisplayMember = "Nazwa";
-            this.comboBox4.SelectedIndex = -1;
+            if (prev == "")
+                this.comboBox4.SelectedIndex = -1;
+            else
+                comboBox4.Text = prev;
         }
         private void refresh_report1()
         {
@@ -254,6 +272,15 @@ namespace WindowsFormsApp2
             if (report_mode == 2)
             {
                 this.refresh_report2();
+            }
+        }
+
+        private void Raporty_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                DB_handling.close_connection();
+                MessageBox.Show("Zamknięto połączenie do DB");
             }
         }
     }

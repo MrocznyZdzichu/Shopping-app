@@ -110,8 +110,10 @@
             this.ClientSize = new System.Drawing.Size(784, 261);
             this.Controls.Add(this.tableLayoutPanel1);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.KeyPreview = true;
             this.Name = "Custom_SQL";
             this.Text = "Custom_SQL";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Custom_SQL_KeyDown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();

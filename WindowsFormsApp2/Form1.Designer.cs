@@ -134,8 +134,11 @@
             this.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.ClientSize = new System.Drawing.Size(384, 361);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.KeyPreview = true;
             this.Name = "Zakupy";
             this.Text = "Aplikacja_zakupowa";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Zakupy_KeyDown);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Zakupy_KeyPress);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 

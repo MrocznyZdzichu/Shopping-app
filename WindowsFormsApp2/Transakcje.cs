@@ -37,9 +37,13 @@ namespace WindowsFormsApp2
             DataTable dt = new DataTable();
             sklepy.Fill(dt);
 
+            string prev = comboBox1.Text;
             this.comboBox1.DataSource = dt;
             this.comboBox1.DisplayMember = "Nazwa";
-            this.comboBox1.SelectedIndex = -1;
+            if (prev == "")
+                this.comboBox1.SelectedIndex = -1;
+            else
+                comboBox1.Text = prev;
         }
         void refresh_products()
         {
@@ -52,9 +56,13 @@ namespace WindowsFormsApp2
             DataTable dt = new DataTable();
             sklepy.Fill(dt);
 
+            string prev = comboBox2.Text;
             this.comboBox2.DataSource = dt;
             this.comboBox2.DisplayMember = "Nazwa";
-            this.comboBox2.SelectedIndex = -1;
+            if (prev == "")
+                this.comboBox2.SelectedIndex = -1;
+            else
+                comboBox2.Text = prev;
         }
         void refresh_years()
         {
@@ -62,9 +70,46 @@ namespace WindowsFormsApp2
             DataTable dt = new DataTable();
             years.Fill(dt);
 
+            string prev = comboBox3.Text;
             this.comboBox3.DataSource = dt;
             this.comboBox3.DisplayMember = "Rok";
-            this.comboBox3.SelectedIndex = -1;
+            if (prev == "")
+                this.comboBox3.SelectedIndex = -1;
+            else
+                comboBox3.Text = prev;
+        }
+        void refresh_months()
+        {
+            string year = comboBox3.Text;
+            SqlDataAdapter months = DB_handling.get_months(year);
+
+            DataTable dt = new DataTable();
+            months.Fill(dt);
+
+            string prev = comboBox4.Text;
+            this.comboBox4.DataSource = dt;
+            this.comboBox4.DisplayMember = "Nazwa miesiąca";
+            if (prev == "")
+                this.comboBox4.SelectedIndex = -1;
+            else
+                comboBox4.Text = prev;
+        }
+        void refresh_days()
+        {
+            string year = comboBox3.Text;
+            string month = comboBox4.Text;
+
+            SqlDataAdapter days = DB_handling.get_days(year, month);
+            DataTable dt = new DataTable();
+            days.Fill(dt);
+
+            string prev = comboBox5.Text;
+            this.comboBox5.DataSource = dt;
+            this.comboBox5.DisplayMember = "Dzień";
+            if (prev == "")
+                this.comboBox5.SelectedIndex = -1;
+            else
+                comboBox5.Text = prev;
         }
         void refresh_summary()
         {
@@ -88,7 +133,7 @@ namespace WindowsFormsApp2
             string sql_days = $"Dzień like \'{day_filter}%\' ";
             bool is_day_filt = !(day_filter == "");
 
-            bool[] filter_flags = {is_shop_filt, is_prod_filt, is_year_filt, is_month_filt, is_day_filt};
+            bool[] filter_flags = { is_shop_filt, is_prod_filt, is_year_filt, is_month_filt, is_day_filt };
             Dictionary<int, string> filtering_insertions = new Dictionary<int, string>();
             filtering_insertions.Add(0, sql_shop);
             filtering_insertions.Add(1, sql_prod);
@@ -100,8 +145,8 @@ namespace WindowsFormsApp2
             string sql_where = "where ";
             string sql_and = "and ";
             string sql_beg = "select Numer, Produkt, Sklep, Data, KtoKomu, Kwota " +
-                          "from factZakup zak left join dimData dat on zak.Data = dat.Klucz "; 
-            string sql_end = "order by dat.Rok desc, dat.Miesiąc desc, dat.Dzień desc";
+                          "from factZakup zak left join dimData dat on zak.Data = dat.Klucz ";
+            string sql_end = "order by dat.Rok desc, dat.Miesiąc desc, dat.Dzień desc, zak.Numer desc";
 
             if (!filter_flags.Contains(true))
                 sql = sql_beg + sql_end;
@@ -129,31 +174,6 @@ namespace WindowsFormsApp2
             DataTable dt = new DataTable();
             zakupy.Fill(dt);
             this.dataGridView1.DataSource = dt;
-        }
-        void refresh_months()
-        {
-            string year = comboBox3.Text;
-            SqlDataAdapter months = DB_handling.get_months(year);
-
-            DataTable dt = new DataTable();
-            months.Fill(dt);
-
-            this.comboBox4.DataSource = dt;
-            this.comboBox4.DisplayMember = "Nazwa miesiąca";
-            this.comboBox4.SelectedIndex = -1;
-        }
-        void refresh_days()
-        {
-            string year = comboBox3.Text;
-            string month = comboBox4.Text;
-
-            SqlDataAdapter days = DB_handling.get_days(year, month);
-            DataTable dt = new DataTable();
-            days.Fill(dt);
-
-            this.comboBox5.DataSource = dt;
-            this.comboBox5.DisplayMember = "Dzień";
-            this.comboBox5.SelectedIndex = -1;
         }
 
         private void comboBox1_TextChanged(object sender, EventArgs e)
@@ -276,6 +296,15 @@ namespace WindowsFormsApp2
             DB_handling.close_connection();
 
             this.refresh_summary();
+        }
+
+        private void Transakcje_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                DB_handling.close_connection();
+                MessageBox.Show("Zamknięto połączenie do DB");
+            }
         }
     }
 }
