@@ -146,7 +146,7 @@ namespace WindowsFormsApp2
             string sql_and = "and ";
             string sql_beg = "select Numer, Produkt, Sklep, Data, KtoKomu, Kwota " +
                           "from factZakup zak left join dimData dat on zak.Data = dat.Klucz ";
-            string sql_end = "order by dat.Rok desc, dat.Miesiąc desc, dat.Dzień desc";
+            string sql_end = "order by dat.Rok desc, dat.Miesiąc desc, dat.Dzień desc, zak.Numer desc";
 
             if (!filter_flags.Contains(true))
                 sql = sql_beg + sql_end;
