@@ -89,5 +89,19 @@ namespace WindowsFormsApp2
 
             this.refresh();
         }
+
+        private void Sklepy_MouseDown(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void Sklepy_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                DB_handling.close_connection();
+                MessageBox.Show("Zamknięto połączenie do DB");
+            }
+        }
     }
 }

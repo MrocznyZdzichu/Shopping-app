@@ -51,5 +51,19 @@ namespace WindowsFormsApp2
             Custom_SQL screen = new Custom_SQL();
             screen.Show();
         }
+
+        private void Zakupy_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void Zakupy_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                DB_handling.close_connection();
+                MessageBox.Show("Zamknięto połączenie do DB");
+            }
+        }
     }
 }

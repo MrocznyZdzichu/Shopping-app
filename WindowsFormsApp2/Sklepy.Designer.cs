@@ -178,10 +178,13 @@
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(484, 611);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.KeyPreview = true;
             this.Name = "Sklepy";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Text = "Sklepy";
             this.Load += new System.EventHandler(this.Sklepy_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Sklepy_KeyDown);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Sklepy_MouseDown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();

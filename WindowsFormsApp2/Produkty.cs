@@ -210,5 +210,14 @@ namespace WindowsFormsApp2
         {
             this.cell_prev_text = this.dataGridView1.CurrentCell.Value.ToString();
         }
+
+        private void Produkty_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                DB_handling.close_connection();
+                MessageBox.Show("Zamknięto połączenie do DB");
+            }
+        }
     }
 }

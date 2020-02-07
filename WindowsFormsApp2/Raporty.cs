@@ -46,6 +46,8 @@ namespace WindowsFormsApp2
             this.refresh_years();
             this.refresh_months();
             this.refresh_report1();
+
+            this.comboBox4.Visible = false;
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -270,6 +272,15 @@ namespace WindowsFormsApp2
             if (report_mode == 2)
             {
                 this.refresh_report2();
+            }
+        }
+
+        private void Raporty_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                DB_handling.close_connection();
+                MessageBox.Show("Zamknięto połączenie do DB");
             }
         }
     }

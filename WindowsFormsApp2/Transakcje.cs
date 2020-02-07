@@ -297,5 +297,14 @@ namespace WindowsFormsApp2
 
             this.refresh_summary();
         }
+
+        private void Transakcje_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                DB_handling.close_connection();
+                MessageBox.Show("Zamknięto połączenie do DB");
+            }
+        }
     }
 }

@@ -294,9 +294,11 @@
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(784, 461);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.KeyPreview = true;
             this.Name = "Produkty";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Text = "Produkty";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Produkty_KeyDown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
