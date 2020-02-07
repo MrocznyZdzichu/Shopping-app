@@ -62,11 +62,14 @@ namespace WindowsFormsApp2
             DataTable dt = new DataTable();
             categories.Fill(dt);
 
+            string prev = comboBox1.Text;
             comboBox1.DataSource = dt;
             comboBox1.DisplayMember = "Kategoria";
-            comboBox1.SelectedIndex = -1;
+            if (prev == "")
+                comboBox1.SelectedIndex = -1;
+            else
+                comboBox1.Text = prev;
         }
-
         void refresh_subcats()
         {
             string sql_where = "";
@@ -80,10 +83,16 @@ namespace WindowsFormsApp2
             DataTable dt = new DataTable();
             subcats.Fill(dt);
 
+            string prev = comboBox2.Text;
             comboBox2.DataSource = dt;
             comboBox2.DisplayMember = "Podkategoria";
-            comboBox2.SelectedIndex = -1;
+            if (prev == "")
+                comboBox2.SelectedIndex = -1;
+            else
+                comboBox2.Text = prev;
+            
         }
+
         public Produkty()
         {
             InitializeComponent();
@@ -96,7 +105,6 @@ namespace WindowsFormsApp2
         {
 
         }
-
         private void label4_Click(object sender, EventArgs e)
         {
 
@@ -106,29 +114,24 @@ namespace WindowsFormsApp2
         {
             this.refresh_table();
         }
-
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.refresh_table();
             this.refresh_subcats();
         }
-
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.refresh_table();
         }
-
         private void comboBox1_TextChanged(object sender, EventArgs e)
         {
             this.refresh_table();
             this.refresh_subcats();
         }
-
         private void comboBox2_TextChanged(object sender, EventArgs e)
         {
             this.refresh_table();
         }
-
         private void comboBox1_TextUpdate(object sender, EventArgs e)
         {
            
@@ -163,7 +166,6 @@ namespace WindowsFormsApp2
             this.refresh_categories();
             this.refresh_subcats();
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
             string new_name, new_category, new_subcat;
@@ -188,11 +190,10 @@ namespace WindowsFormsApp2
                 }
             }
         }
-
         private void button2_Click(object sender, EventArgs e)
         {
             string product_delete = dataGridView1.CurrentCell.Value.ToString();
-            int row = dataGridView1.CurrentCell.ColumnIndex;
+            int row = dataGridView1.CurrentCell.RowIndex;
             string delete_PK = dataGridView1[0, row].Value.ToString();
 
             string sql = $"delete from dimProdukt where Nazwa = \'{delete_PK}\'";
@@ -205,7 +206,6 @@ namespace WindowsFormsApp2
             this.refresh_categories();
             this.refresh_subcats();
         }
-
         private void dataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             this.cell_prev_text = this.dataGridView1.CurrentCell.Value.ToString();
