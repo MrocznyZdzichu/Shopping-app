@@ -289,7 +289,6 @@ namespace WindowsFormsApp2
             }
 
             string sql = sql_beg + sql_end;
-            System.IO.File.WriteAllText(@"E:\c#_tutorial\WindowsFormsApp2\debug.log", sql);
 
             DB_handling.open_connection();
             DB_handling.update(sql);
