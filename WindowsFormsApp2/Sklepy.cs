@@ -97,7 +97,7 @@ namespace WindowsFormsApp2
 
         private void Sklepy_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Control && e.KeyCode == Keys.S)
+            if (e.Control && e.KeyCode == Keys.Q)
             {
                 DB_handling.close_connection();
                 MessageBox.Show("Zamknięto połączenie do DB");
