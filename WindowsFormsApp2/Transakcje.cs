@@ -274,6 +274,7 @@ namespace WindowsFormsApp2
             int row = this.dataGridView1.CurrentCell.RowIndex;
             int col = this.dataGridView1.CurrentCell.ColumnIndex;
             string new_val = this.dataGridView1.CurrentCell.Value.ToString();
+            new_val = new_val.Replace(',', '.');
 
             string[] col_names = { "Numer", "Produkt", "Sklep", "Data", "KtoKomu", "Kwota" };
 
