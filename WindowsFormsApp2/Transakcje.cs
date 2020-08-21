@@ -257,10 +257,26 @@ namespace WindowsFormsApp2
 
         private void button5_Click(object sender, EventArgs e)
         {
-            string insertion = this.textBox1.Text;
-            for (int i = 0; i < this.dataGridView2.SelectedCells.Count; i++)
+            if (this.dataGridView2.SelectedCells.Count > 0)
             {
-                this.dataGridView2.SelectedCells[i].Value = insertion;
+                string insertion = this.textBox1.Text;
+                for (int i = 0; i < this.dataGridView2.SelectedCells.Count; i++)
+                {
+                    this.dataGridView2.SelectedCells[i].Value = insertion;
+                }
+            }
+            else
+            {
+                for (int i=1; i < this.dataGridView2.ColumnCount; i++)
+                {
+                    for (int j=1; j < this.dataGridView2.RowCount-1; j++)
+                    {
+                        if (this.dataGridView2[i, j].Value == null)
+                        {
+                            this.dataGridView2[i, j].Value = this.dataGridView2[i, j - 1].Value;
+                        }
+                    }
+                }
             }
         }
 
@@ -305,6 +321,16 @@ namespace WindowsFormsApp2
                 DB_handling.close_connection();
                 MessageBox.Show("Zamknięto połączenie do DB");
             }
+
+            if (e.Control && e.KeyCode == Keys.E)
+            {
+                this.dataGridView2.ClearSelection();
+            }
+        }
+
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

@@ -1,0 +1,1 @@
+update factZakup set KtoKomu = 'MaksUlci' where Numer = 11557

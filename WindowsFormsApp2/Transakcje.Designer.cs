@@ -304,6 +304,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(661, 134);
             this.tableLayoutPanel3.TabIndex = 4;
+            this.tableLayoutPanel3.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel3_Paint);
             // 
             // button3
             // 
@@ -350,7 +351,7 @@
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(211, 35);
             this.button5.TabIndex = 3;
-            this.button5.Text = "Wypełnij zaznaczone";
+            this.button5.Text = "Wypełnij calość lub zaznaczone";
             this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
